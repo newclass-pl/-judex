@@ -26,8 +26,8 @@ Use example
     use Judex\ValidatorManager;
 
     $validator=new ValidatorManager();
-    $validator->add(new EmailValidator());
-    $validator->add(new NotEmptyValidator());
+    $validator->addValidator(new EmailValidator());
+    $validator->addValidator(new NotEmptyValidator());
 
     $result=$validator->validate('test@newclass.pl');
     $valid=$result->isValid(); //return true
