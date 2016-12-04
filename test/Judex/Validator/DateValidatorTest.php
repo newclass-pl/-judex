@@ -18,9 +18,17 @@ namespace Test\Judex;
 use Judex\Result;
 use Judex\Validator\DateValidator;
 
+/**
+ * Class DateValidatorTest
+ * @package Test\Judex
+ * @author Michal Tomczak (michal.tomczak@newclass.pl)
+ */
 class DateValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     */
     public function testValidateSuccess(){
         $validator=new DateValidator();
         $resultMock=$this->getMockBuilder(Result::class)->getMock();
@@ -30,6 +38,9 @@ class DateValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testValidateFail(){
         $validator=new DateValidator();
 
@@ -49,6 +60,9 @@ class DateValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['Value is not valid format date YYYY-MM-DD.'],$result->getErrors());
     }
 
+    /**
+     *
+     */
     public function testCustomMessage(){
         $validator=new DateValidator('Custom message.');
         $result=new Result();

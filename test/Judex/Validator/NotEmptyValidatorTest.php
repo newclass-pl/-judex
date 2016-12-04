@@ -18,9 +18,17 @@ namespace Test\Judex;
 use Judex\Result;
 use Judex\Validator\NotEmptyValidator;
 
+/**
+ * Class NotEmptyValidatorTest
+ * @package Test\Judex
+ * @author Michal Tomczak (michal.tomczak@newclass.pl)
+ */
 class NotEmptyValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     */
     public function testValidateSuccess(){
         $validator=new NotEmptyValidator();
         $resultMock=$this->getMockBuilder(Result::class)->getMock();
@@ -32,6 +40,9 @@ class NotEmptyValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testValidateFail(){
         $errorMessage=['Value can\'t be empty.'];
         $validator=new NotEmptyValidator();
@@ -52,6 +63,9 @@ class NotEmptyValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($errorMessage,$result->getErrors());
     }
 
+    /**
+     *
+     */
     public function testCustomMessage(){
         $validator=new NotEmptyValidator('Custom message.');
         $result=new Result();

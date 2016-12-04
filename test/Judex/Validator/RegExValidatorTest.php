@@ -16,12 +16,19 @@ namespace Test\Judex;
 
 
 use Judex\Result;
-use Judex\Validator\PhoneNumberValidator;
 use Judex\Validator\RegExValidator;
 
+/**
+ * Class RegExValidatorTest
+ * @package Test\Judex
+ * @author Michal Tomczak (michal.tomczak@newclass.pl)
+ */
 class RegExValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     */
     public function testValidateSuccess(){
         $validator=new RegExValidator('message: \d{1}');
         $resultMock=$this->getMockBuilder(Result::class)->getMock();
@@ -32,6 +39,9 @@ class RegExValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testValidateFail(){
         $errorMessage=['Value is not validated by pattern.'];
         $validator=new RegExValidator('message: \d{1}');
@@ -53,6 +63,9 @@ class RegExValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testCustomMessage(){
         $validator=new RegExValidator('message: \d{1}','Custom message.');
         $result=new Result();

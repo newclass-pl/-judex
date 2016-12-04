@@ -19,12 +19,20 @@ use Judex\Validator\EmailValidator;
 use Judex\Validator\NotEmptyValidator;
 use Judex\ValidatorManager;
 
+/**
+ * Class ValidatorManagerTest
+ * @package Test\Judex
+ * @author Michal Tomczak (michal.tomczak@newclass.pl)
+ */
 class ValidatorManagerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     */
     public function testValidateEmpty(){
         $validator=new ValidatorManager();
-        $validator->add(new EmailValidator());
+        $validator->addValidator(new EmailValidator());
 
         $result=$validator->validate('test@newclass.pl');
         $this->assertTrue($result->isValid());
@@ -39,10 +47,13 @@ class ValidatorManagerTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testValidateNotEmpty(){
         $validator=new ValidatorManager();
-        $validator->add(new EmailValidator());
-        $validator->add(new NotEmptyValidator());
+        $validator->addValidator(new EmailValidator());
+        $validator->addValidator(new NotEmptyValidator());
 
         $result=$validator->validate('test@newclass.pl');
         $this->assertTrue($result->isValid());

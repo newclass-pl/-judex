@@ -18,9 +18,17 @@ namespace Test\Judex;
 use Judex\Result;
 use Judex\Validator\BooleanValidator;
 
+/**
+ * Class BooleanValidatorTest
+ * @package Test\Judex
+ * @author Michal Tomczak (michal.tomczak@newclass.pl)
+ */
 class BooleanValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     */
     public function testValidateSuccess(){
         $validator=new BooleanValidator();
         $resultMock=$this->getMockBuilder(Result::class)->getMock();
@@ -31,6 +39,9 @@ class BooleanValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testValidateFail(){
         $validator=new BooleanValidator();
         $result=new Result();
@@ -40,6 +51,9 @@ class BooleanValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['Value is not boolean.'],$result->getErrors());
     }
 
+    /**
+     *
+     */
     public function testCustomMessage(){
         $validator=new BooleanValidator('Custom message.');
         $result=new Result();

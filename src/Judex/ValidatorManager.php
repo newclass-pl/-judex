@@ -29,9 +29,30 @@ class ValidatorManager
     /**
      * @param AbstractValidator $validator
      */
-    public function add($validator)
+    public function addValidator($validator)
     {
         $this->validators[spl_object_hash($validator)] = $validator;
+    }
+
+    /**
+     * @return AbstractValidator[]
+     */
+    public function getValidators()
+    {
+        return $this->validators;
+    }
+
+    /**
+     * @param string $name
+     * @return AbstractValidator
+     * @throws ValidatorNotFoundException
+     */
+    public function getValidator($name)
+    {
+        if(!isset($this->validators[$name])){
+            throw new ValidatorNotFoundException($name);
+        }
+        return $this->validators[$name];
     }
 
     /**

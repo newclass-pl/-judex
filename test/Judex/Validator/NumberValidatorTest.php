@@ -19,9 +19,17 @@ use Judex\OptionNotFoundException;
 use Judex\Result;
 use Judex\Validator\NumberValidator;
 
+/**
+ * Class NumberValidatorTest
+ * @package Test\Judex
+ * @author Michal Tomczak (michal.tomczak@newclass.pl)
+ */
 class NumberValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     */
     public function testValidateSuccess()
     {
         $validator = new NumberValidator();
@@ -39,6 +47,9 @@ class NumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testValidateFail()
     {
         $validator = new NumberValidator(['min' => -20, 'max' => 30,]);
@@ -60,6 +71,9 @@ class NumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testCustomMessage()
     {
         $validator = new NumberValidator([
@@ -84,6 +98,9 @@ class NumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testOptionNotFoundException()
     {
         $this->expectException(OptionNotFoundException::class);

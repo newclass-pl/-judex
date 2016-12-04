@@ -18,9 +18,17 @@ namespace Test\Judex;
 use Judex\Result;
 use Judex\Validator\EmailValidator;
 
+/**
+ * Class EmailValidatorTest
+ * @package Test\Judex
+ * @author Michal Tomczak (michal.tomczak@newclass.pl)
+ */
 class EmailValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     */
     public function testValidateSuccess(){
         $validator=new EmailValidator();
         $resultMock=$this->getMockBuilder(Result::class)->getMock();
@@ -30,6 +38,9 @@ class EmailValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testValidateFail(){
         $errorMessage=['Value is not valid format email.'];
         $validator=new EmailValidator();
@@ -50,6 +61,9 @@ class EmailValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($errorMessage,$result->getErrors());
     }
 
+    /**
+     *
+     */
     public function testCustomMessage(){
         $validator=new EmailValidator('Custom message.');
         $result=new Result();

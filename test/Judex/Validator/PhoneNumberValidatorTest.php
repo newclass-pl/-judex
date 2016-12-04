@@ -18,9 +18,17 @@ namespace Test\Judex;
 use Judex\Result;
 use Judex\Validator\PhoneNumberValidator;
 
+/**
+ * Class PhoneNumberValidatorTest
+ * @package Test\Judex
+ * @author Michal Tomczak (michal.tomczak@newclass.pl)
+ */
 class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     */
     public function testValidateSuccess(){
         $validator=new PhoneNumberValidator();
         $resultMock=$this->getMockBuilder(Result::class)->getMock();
@@ -30,6 +38,9 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testValidateFail(){
         $errorMessage=['Value is not valid format phone number 000000000.'];
         $validator=new PhoneNumberValidator();
@@ -56,6 +67,9 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     *
+     */
     public function testCustomMessage(){
         $validator=new PhoneNumberValidator('Custom message.');
         $result=new Result();
