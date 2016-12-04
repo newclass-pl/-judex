@@ -15,14 +15,14 @@
 namespace Judex\Validator;
 
 use Judex\Result;
-use Judex\Validator;
+use Judex\AbstractValidator;
 
 /**
  * Validator for email.
  * @package Judex\Validator
  * @author Michal Tomczak (michal.tomczak@newclass.pl)
  */
-class EmailValidator implements Validator
+class EmailValidator extends AbstractValidator
 {
 
     /**
@@ -46,16 +46,8 @@ class EmailValidator implements Validator
     {
 
         if (!preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+$/", $value)) {
-            $result->addError($this->message);
+            $result->addError($this->message, compact('value'));
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isNullable()
-    {
-        return true;
     }
 
 }

@@ -28,9 +28,10 @@ class Result
 
     /**
      * @param $message
+     * @param mixed[] $values
      */
-    public function addError($message){
-        $this->errors[]=$message;
+    public function addError($message,$values=[]){
+        $this->errors[]=$this->filterMessage($message,$values);
     }
 
     /**
@@ -45,5 +46,17 @@ class Result
      */
     public function getErrors(){
         return $this->errors;
+    }
+
+    /**
+     * @param string $message
+     * @param mixed[] $values
+     * @return string
+     */
+    private function filterMessage($message,$values){
+        return preg_replace_callback('/\$\{(.+?)\}/',function ($match) use($values){
+            return $values[$match[1]];
+        },$message);
+
     }
 }

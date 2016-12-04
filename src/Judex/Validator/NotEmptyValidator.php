@@ -15,14 +15,14 @@
 namespace Judex\Validator;
 
 use Judex\Result;
-use Judex\Validator;
+use Judex\AbstractValidator;
 
 /**
  * Validator for not empty elements.
  * @package Judex\Validator
  * @author Michal Tomczak (michal.tomczak@newclass.pl)
  */
-class NotEmptyValidator implements Validator
+class NotEmptyValidator extends AbstractValidator
 {
 
     /**
@@ -37,6 +37,7 @@ class NotEmptyValidator implements Validator
     public function __construct($message = 'Value can\'t be empty.')
     {
         $this->message = $message;
+        $this->setNullable(false);
     }
 
     /**
@@ -45,27 +46,19 @@ class NotEmptyValidator implements Validator
     public function validate($value, Result $result)
     {
         if ($value === null) {
-            $result->addError($this->message);
+            $result->addError($this->message,compact('value'));
             return;
         }
 
         if (is_array($value) && count($value) === 0) {
-            $result->addError($this->message);
+            $result->addError($this->message,compact('value'));
             return;
         }
 
         if (is_string($value) && $value === '') {
-            $result->addError($this->message);
+            $result->addError($this->message,compact('value'));
             return;
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isNullable()
-    {
-        return false;
     }
 
 }

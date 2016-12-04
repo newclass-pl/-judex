@@ -14,7 +14,7 @@
 
 namespace Judex\Validator;
 
-use Judex\Validator;
+use Judex\AbstractValidator;
 use Judex\Result;
 
 /**
@@ -22,7 +22,7 @@ use Judex\Result;
  * @package Judex\Validator
  * @author Michal Tomczak (michal.tomczak@newclass.pl)
  */
-class DateValidator implements Validator
+class DateValidator extends AbstractValidator
 {
 
     /**
@@ -47,17 +47,9 @@ class DateValidator implements Validator
 
         $d = \DateTime::createFromFormat('Y-m-d', $value);
         if (!$d || $d->format('Y-m-d') !== $value) {
-            $result->addError($this->message);
+            $result->addError($this->message,compact('value'));
         }
 
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isNullable()
-    {
-        return true;
     }
 
 }

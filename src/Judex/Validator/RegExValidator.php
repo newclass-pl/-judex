@@ -15,14 +15,14 @@
 namespace Judex\Validator;
 
 use Judex\Result;
-use Judex\Validator;
+use Judex\AbstractValidator;
 
 /**
  * Validator for reg exp.
  * @package Judex\Validator
  * @author Michal Tomczak (michal.tomczak@newclass.pl)
  */
-class RegExpValidator implements Validator
+class RegExValidator extends AbstractValidator
 {
 
     /**
@@ -46,16 +46,8 @@ class RegExpValidator implements Validator
     public function validate($value, Result $result)
     {
         if (!preg_match('/' . $this->pattern . '/', $value)) {
-            $result->addError($this->message);
+            $result->addError($this->message,['value'=>$value,'pattern'=>$this->pattern]);
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isNullable()
-    {
-        return true;
     }
 
 }

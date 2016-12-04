@@ -15,14 +15,14 @@
 namespace Judex\Validator;
 
 use Judex\Result;
-use Judex\Validator;
+use Judex\AbstractValidator;
 
 /**
  * Validator for telephone.
  * @package Judex\Validator
  * @author Michal Tomczak (michal.tomczak@newclass.pl)
  */
-class PhoneNumberValidator implements Validator
+class PhoneNumberValidator extends AbstractValidator
 {
 
     /**
@@ -45,17 +45,8 @@ class PhoneNumberValidator implements Validator
     public function validate($value, Result $result)
     {
         if (!preg_match("/^[1-9][0-9]{8}$/", $value)) {
-            return "Invalid telephone format.";
+            $result->addError($this->message,compact('value'));
         }
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isNullable()
-    {
-        return true;
     }
 
 }

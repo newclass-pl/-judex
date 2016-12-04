@@ -1,6 +1,6 @@
 <?php
 /**
- * Pactum: Config manager
+ * Judex: Validator
  * Copyright (c) NewClass (http://newclass.pl)
  *
  * Licensed under The MIT License

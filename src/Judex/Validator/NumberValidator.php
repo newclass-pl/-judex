@@ -16,14 +16,14 @@ namespace Judex\Validator;
 
 use Judex\OptionNotFoundException;
 use Judex\Result;
-use Judex\Validator;
+use Judex\AbstractValidator;
 
 /**
  * Validator for number.
  * @package Judex\Validator
  * @author Michal Tomczak (michal.tomczak@newclass.pl)
  */
-class NumberValidator implements Validator
+class NumberValidator extends AbstractValidator
 {
 
     /**
@@ -52,11 +52,11 @@ class NumberValidator implements Validator
      * @param $options
      * @throws OptionNotFoundException
      */
-    public function __construct($options)
+    public function __construct($options=[])
     {
         $options += ['messageType' => 'Value is not valid number.',
-            'messageMin' => 'Value is too small. Min value is @{min}.',
-            'messageMax' => 'Value is too big. Max value is @{max}.', 'min' => null, 'max' => null,];
+            'messageMin' => 'Value is too small. Min value is ${min}.',
+            'messageMax' => 'Value is too big. Max value is ${max}.', 'min' => null, 'max' => null,];
         foreach ($options as $kOption => $option) {
             $methodName = 'set' . ucfirst($kOption);
             if (!method_exists($this, $methodName)) {
@@ -113,25 +113,17 @@ class NumberValidator implements Validator
     public function validate($value, Result $result)
     {
         if (!is_numeric($value)) {
-            $result->addError($this->messageType);
+            $result->addError($this->messageType,['value'=>$value,'min'=>$this->min,'max'=>$this->max]);
             return null;
         }
 
         if ($this->min !== null && $value < $this->min) {
-            $result->addError($this->messageMin);
+            $result->addError($this->messageMin,['value'=>$value,'min'=>$this->min,'max'=>$this->max]);
         }
 
         if ($this->max !== null && $value > $this->max) {
-            $result->addError($this->messageMax);
+            $result->addError($this->messageMax,['value'=>$value,'min'=>$this->min,'max'=>$this->max]);
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isNullable()
-    {
-        return true;
     }
 
 }

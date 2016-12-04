@@ -14,7 +14,7 @@
 
 namespace Judex\Validator;
 
-use Judex\Validator;
+use Judex\AbstractValidator;
 use Judex\Result;
 
 /**
@@ -22,7 +22,7 @@ use Judex\Result;
  * @package Judex\Validator
  * @author Michal Tomczak (michal.tomczak@newclass.pl)
  */
-class BooleanValidator implements Validator
+class BooleanValidator extends AbstractValidator
 {
 
     /**
@@ -45,16 +45,9 @@ class BooleanValidator implements Validator
     public function validate($value, Result $result)
     {
         if (!is_bool($value)) {
-            $result->addError($this->message);
+            $result->addError($this->message,compact('value'));
         }
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isNullable()
-    {
-        return true;
-    }
 }

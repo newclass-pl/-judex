@@ -19,8 +19,12 @@ namespace Judex;
  * @package Judex
  * @author Michal Tomczak (michal.tomczak@newclass.pl)
  */
-interface Validator
+abstract class AbstractValidator
 {
+    /**
+     * @var bool
+     */
+    private $nullable=true;
 
     /**
      * Implement method to validate value.
@@ -28,11 +32,22 @@ interface Validator
      * @param mixed $value - value to parse
      * @param Result $result
      */
-    public function validate($value, Result $result);
+    abstract public function validate($value, Result $result);
 
     /**
      * @return bool
      */
-    public function isNullable();
+    public final function isNullable(){
+        return $this->nullable;
+    }
+
+    /**
+     * @param bool $flag
+     * @return $this
+     */
+    protected final function setNullable($flag){
+        $this->nullable=$flag;
+        return $this;
+    }
 
 }

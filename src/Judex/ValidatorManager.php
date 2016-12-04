@@ -21,5 +21,35 @@ namespace Judex;
  */
 class ValidatorManager
 {
+    /**
+     * @var AbstractValidator[]
+     */
+    private $validators;
 
+    /**
+     * @param AbstractValidator $validator
+     */
+    public function add($validator)
+    {
+        $this->validators[spl_object_hash($validator)] = $validator;
+    }
+
+    /**
+     * @param mixed $value
+     * @return Result
+     */
+    public function validate($value)
+    {
+        $result = new Result();
+        foreach ($this->validators as $validator) {
+            if ($validator->isNullable() && ($value === null || is_string($value) && $value === '')) {
+                continue;
+            }
+
+            $validator->validate($value, $result);
+
+        }
+
+        return $result;
+    }
 }
