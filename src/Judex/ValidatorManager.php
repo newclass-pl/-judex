@@ -24,7 +24,7 @@ class ValidatorManager
     /**
      * @var AbstractValidator[]
      */
-    private $validators;
+    private $validators=[];
 
     /**
      * @param AbstractValidator $validator

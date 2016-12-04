@@ -76,7 +76,7 @@ class ValidatorManagerTest extends \PHPUnit_Framework_TestCase
     /**
      *
      */
-    public function testGettrSetter()
+    public function testGetterSetter()
     {
         $validatorManager = new ValidatorManager();
         $validator = new EmailValidator();
