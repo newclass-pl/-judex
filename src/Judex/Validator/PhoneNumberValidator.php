@@ -25,28 +25,47 @@ use Judex\AbstractValidator;
 class PhoneNumberValidator extends AbstractValidator
 {
 
-    /**
-     * @var string
-     */
-    private $message;
+	/**
+	 * @var string
+	 */
+	private $message;
 
-    /**
-     * BooleanValidator constructor.
-     * @param string $message
-     */
-    public function __construct($message = 'Value is not valid format phone number 000000000.')
-    {
-        $this->message = $message;
-    }
+	/**
+	 * PhoneNumberValidator constructor.
+	 * @param mixed[] $options
+	 */
+	public function __construct(array $options = [])
+	{
+		$options += ['message' => 'Value is not valid format phone number 000000000.'];
+		parent::__construct($options);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Result $result)
-    {
-        if (!preg_match("/^[1-9][0-9]{8}$/", $value)) {
-            $result->addError($this->message,compact('value'));
-        }
-    }
+	/**
+	 * @return string
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
+
+	/**
+	 * @param string $message
+	 * @return PhoneNumberValidator
+	 */
+	public function setMessage($message)
+	{
+		$this->message = $message;
+		return $this;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function validate($value, Result $result)
+	{
+		if (!preg_match("/^[1-9][0-9]{8}$/", $value)) {
+			$result->addError($this->message, compact('value'));
+		}
+	}
 
 }

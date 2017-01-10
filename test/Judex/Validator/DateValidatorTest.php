@@ -64,7 +64,7 @@ class DateValidatorTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testCustomMessage(){
-        $validator=new DateValidator('Custom message.');
+        $validator=new DateValidator(['message'=>'Custom message.']);
         $result=new Result();
 
         $validator->validate(null,$result);

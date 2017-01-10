@@ -71,7 +71,7 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testCustomMessage(){
-        $validator=new PhoneNumberValidator('Custom message.');
+        $validator=new PhoneNumberValidator(['message'=>'Custom message.']);
         $result=new Result();
 
         $validator->validate(null,$result);

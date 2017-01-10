@@ -25,40 +25,61 @@ use Judex\AbstractValidator;
 class NotEmptyValidator extends AbstractValidator
 {
 
-    /**
-     * @var string
-     */
-    private $message;
+	/**
+	 * @var string
+	 */
+	private $message;
 
-    /**
-     * BooleanValidator constructor.
-     * @param string $message
-     */
-    public function __construct($message = 'Value can\'t be empty.')
-    {
-        $this->message = $message;
-        $this->setNullable(false);
-    }
+	/**
+	 * NotEmptyValidator constructor.
+	 * @param mixed[] $options
+	 */
+	public function __construct(array $options = [])
+	{
+		$options += ['message' => 'Value can\'t be empty.'];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Result $result)
-    {
-        if ($value === null) {
-            $result->addError($this->message,compact('value'));
-            return;
-        }
+		$this->setNullable(false);
 
-        if (is_array($value) && count($value) === 0) {
-            $result->addError($this->message,compact('value'));
-            return;
-        }
+		parent::__construct($options);
+	}
 
-        if (is_string($value) && $value === '') {
-            $result->addError($this->message,compact('value'));
-            return;
-        }
-    }
+	/**
+	 * @return string
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
+
+	/**
+	 * @param string $message
+	 * @return NotEmptyValidator
+	 */
+	public function setMessage($message)
+	{
+		$this->message = $message;
+		return $this;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function validate($value, Result $result)
+	{
+		if ($value === null) {
+			$result->addError($this->message, compact('value'));
+			return;
+		}
+
+		if (is_array($value) && count($value) === 0) {
+			$result->addError($this->message, compact('value'));
+			return;
+		}
+
+		if (is_string($value) && $value === '') {
+			$result->addError($this->message, compact('value'));
+			return;
+		}
+	}
 
 }

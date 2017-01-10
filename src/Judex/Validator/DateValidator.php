@@ -25,31 +25,50 @@ use Judex\Result;
 class DateValidator extends AbstractValidator
 {
 
-    /**
-     * @var string
-     */
-    private $message;
+	/**
+	 * @var string
+	 */
+	private $message;
 
-    /**
-     * BooleanValidator constructor.
-     * @param string $message
-     */
-    public function __construct($message = 'Value is not valid format date YYYY-MM-DD.')
-    {
-        $this->message = $message;
-    }
+	/**
+	 * DateValidator constructor.
+	 * @param mixed[] $options
+	 */
+	public function __construct(array $options = [])
+	{
+		$options += ['message' => 'Value is not valid format date YYYY-MM-DD.'];
+		parent::__construct($options);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Result $result)
-    {
+	/**
+	 * @return string
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
 
-        $d = \DateTime::createFromFormat('Y-m-d', $value);
-        if (!$d || $d->format('Y-m-d') !== $value) {
-            $result->addError($this->message,compact('value'));
-        }
+	/**
+	 * @param string $message
+	 * @return DateValidator
+	 */
+	public function setMessage($message)
+	{
+		$this->message = $message;
+		return $this;
+	}
 
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function validate($value, Result $result)
+	{
+
+		$d = \DateTime::createFromFormat('Y-m-d', $value);
+		if (!$d || $d->format('Y-m-d') !== $value) {
+			$result->addError($this->message, compact('value'));
+		}
+
+	}
 
 }

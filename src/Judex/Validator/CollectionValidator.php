@@ -25,65 +25,89 @@ use Judex\Result;
 class CollectionValidator extends AbstractValidator
 {
 
-    /**
-     * @var string
-     */
-    private $message;
-    /**
-     * @var mixed[]
-     */
-    private $collection;
+	/**
+	 * @var string
+	 */
+	private $message;
+	/**
+	 * @var mixed[][]
+	 */
+	private $records = [];
 
-    public function __construct($collection=[], $message = 'Collection does not contain value "${value}". Available items: "${collection}".')
-    {
-        $this->message = $message;
-        $this->setCollection($collection);
-    }
+	/**
+	 * CollectionValidator constructor.
+	 * @param mixed[] $options
+	 */
+	public function __construct(array $options=[])
+	{
+		$options += ['message' => 'Collection does not contain value "${value}". Available items: "${collection}".',];
+		parent::__construct($options);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Result $result)
-    {
-        if (!is_array($value)) {
-            $value = [$value];
-        }
+	/**
+	 * @return string
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
 
-        foreach ($value as $item) {
-            $this->checkItem($item, $result);
-        }
+	/**
+	 * @param string $message
+	 * @return CollectionValidator
+	 */
+	public function setMessage($message)
+	{
+		$this->message = $message;
+		return $this;
+	}
 
-    }
+	/**
+	 * @return \mixed[][]
+	 */
+	public function getRecords()
+	{
+		return $this->records;
+	}
 
-    /**
-     * @param mixed $item
-     * @param Result $result
-     */
-    private function checkItem($item, Result $result)
-    {
-        $values = [
-            'value' => $item,
-            'collection' => implode(', ', $this->collection)
-        ];
-        if (!in_array($item, $this->collection, true)) {
-            $result->addError($this->message,$values);
-        }
-    }
+	/**
+	 * @param \mixed[][] $records
+	 * @return CollectionValidator
+	 */
+	public function setRecords(array $records)
+	{
+		$this->records = $records;
+		return $this;
+	}
 
-    /**
-     * @return mixed[]
-     */
-    public function getCollection()
-    {
-        return $this->collection;
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function validate($value, Result $result)
+	{
+		if (!is_array($value)) {
+			$value = [$value];
+		}
 
-    /**
-     * @param \mixed[] $collection
-     */
-    public function setCollection($collection)
-    {
-        $this->collection = $collection;
-    }
+		foreach ($value as $item) {
+			$this->checkItem($item, $result);
+		}
+
+	}
+
+	/**
+	 * @param mixed $item
+	 * @param Result $result
+	 */
+	private function checkItem($item, Result $result)
+	{
+		$values = [
+			'value' => $item,
+			'collection' => implode(', ', $this->records)
+		];
+		if (!in_array($item, $this->records, true)) {
+			$result->addError($this->message, $values);
+		}
+	}
 
 }

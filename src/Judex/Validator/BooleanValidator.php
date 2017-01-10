@@ -25,29 +25,48 @@ use Judex\Result;
 class BooleanValidator extends AbstractValidator
 {
 
-    /**
-     * @var string
-     */
-    private $message;
+	/**
+	 * @var string
+	 */
+	private $message;
 
-    /**
-     * BooleanValidator constructor.
-     * @param string $message
-     */
-    public function __construct($message = 'Value is not boolean.')
-    {
-        $this->message = $message;
-    }
+	/**
+	 * BooleanValidator constructor.
+	 * @param mixed[] $options
+	 */
+	public function __construct(array $options = [])
+	{
+		$options += ['message' => 'Value is not boolean.'];
+		parent::__construct($options);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Result $result)
-    {
-        if (!is_bool($value)) {
-            $result->addError($this->message,compact('value'));
-        }
+	/**
+	 * @return string
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
 
-    }
+	/**
+	 * @param string $message
+	 * @return BooleanValidator
+	 */
+	public function setMessage($message)
+	{
+		$this->message = $message;
+		return $this;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function validate($value, Result $result)
+	{
+		if (!is_bool($value)) {
+			$result->addError($this->message, compact('value'));
+		}
+
+	}
 
 }

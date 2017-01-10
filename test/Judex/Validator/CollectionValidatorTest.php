@@ -31,12 +31,12 @@ class CollectionValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateSuccess()
     {
-        $validator = new CollectionValidator([
+        $validator = new CollectionValidator(['records'=>[
             'r1',
             'r2',
             'r3',
             'r4'
-        ]);
+        ]]);
         $resultMock = $this->getMockBuilder(Result::class)->getMock();
         $resultMock->expects($this->never())->method('addError');
 
@@ -54,7 +54,7 @@ class CollectionValidatorTest extends \PHPUnit_Framework_TestCase
     public function testValidateFail()
     {
         $validator = new CollectionValidator();
-        $validator->setCollection([
+        $validator->setRecords([
             'r1',
             'r2',
             'r3',
@@ -96,7 +96,7 @@ class CollectionValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCustomMessage()
     {
-        $validator = new CollectionValidator(['r1'], 'Custom message.');
+        $validator = new CollectionValidator(['records'=>['r1'],'message'=>'Custom message.']);
         $result = new Result();
 
         $validator->validate(null, $result);

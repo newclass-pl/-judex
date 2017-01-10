@@ -21,33 +21,52 @@ namespace Judex;
  */
 abstract class AbstractValidator
 {
-    /**
-     * @var bool
-     */
-    private $nullable=true;
+	/**
+	 * @var bool
+	 */
+	private $nullable = true;
 
-    /**
-     * Implement method to validate value.
-     *
-     * @param mixed $value - value to parse
-     * @param Result $result
-     */
-    abstract public function validate($value, Result $result);
+	/**
+	 * AbstractValidator constructor.
+	 * @param mixed[] $options
+	 * @throws OptionNotFoundException
+	 */
+	public function __construct($options=[])
+	{
+		foreach ($options as $kOption => $option) {
+			$methodName = 'set' . ucfirst($kOption);
+			if (!method_exists($this, $methodName)) {
+				throw new OptionNotFoundException($kOption);
+			}
 
-    /**
-     * @return bool
-     */
-    public final function isNullable(){
-        return $this->nullable;
-    }
+			call_user_func([$this, $methodName], $option);
+		}
+	}
 
-    /**
-     * @param bool $flag
-     * @return $this
-     */
-    protected final function setNullable($flag){
-        $this->nullable=$flag;
-        return $this;
-    }
+	/**
+	 * Implement method to validate value.
+	 *
+	 * @param mixed $value - value to parse
+	 * @param Result $result
+	 */
+	abstract public function validate($value, Result $result);
+
+	/**
+	 * @return bool
+	 */
+	public final function isNullable()
+	{
+		return $this->nullable;
+	}
+
+	/**
+	 * @param bool $flag
+	 * @return $this
+	 */
+	protected final function setNullable($flag)
+	{
+		$this->nullable = $flag;
+		return $this;
+	}
 
 }

@@ -67,7 +67,7 @@ class NotEmptyValidatorTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testCustomMessage(){
-        $validator=new NotEmptyValidator('Custom message.');
+        $validator=new NotEmptyValidator(['message'=>'Custom message.']);
         $result=new Result();
 
         $validator->validate(null,$result);

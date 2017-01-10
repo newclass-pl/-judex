@@ -25,29 +25,48 @@ use Judex\AbstractValidator;
 class EmailValidator extends AbstractValidator
 {
 
-    /**
-     * @var string
-     */
-    private $message;
+	/**
+	 * @var string
+	 */
+	private $message;
 
-    /**
-     * BooleanValidator constructor.
-     * @param string $message
-     */
-    public function __construct($message = 'Value is not valid format email.')
-    {
-        $this->message = $message;
-    }
+	/**
+	 * EmailValidator constructor.
+	 * @param mixed[] $options
+	 */
+	public function __construct(array $options = [])
+	{
+		$options += ['message' => 'Value is not valid format email.'];
+		parent::__construct($options);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Result $result)
-    {
+	/**
+	 * @return string
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
 
-        if (!preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+$/", $value)) {
-            $result->addError($this->message, compact('value'));
-        }
-    }
+	/**
+	 * @param string $message
+	 * @return EmailValidator
+	 */
+	public function setMessage($message)
+	{
+		$this->message = $message;
+		return $this;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function validate($value, Result $result)
+	{
+
+		if (!preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+$/", $value)) {
+			$result->addError($this->message, compact('value'));
+		}
+	}
 
 }

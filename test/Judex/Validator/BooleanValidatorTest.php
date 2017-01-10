@@ -55,7 +55,7 @@ class BooleanValidatorTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testCustomMessage(){
-        $validator=new BooleanValidator('Custom message.');
+        $validator=new BooleanValidator(['message'=>'Custom message.']);
         $result=new Result();
 
         $validator->validate(null,$result);

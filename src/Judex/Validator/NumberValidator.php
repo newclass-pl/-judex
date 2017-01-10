@@ -47,65 +47,107 @@ class NumberValidator extends AbstractValidator
      */
     private $max;
 
-    /**
-     * BooleanValidator constructor.
-     * @param $options
-     * @throws OptionNotFoundException
-     */
-    public function __construct($options=[])
+	/**
+	 * NumberValidator constructor.
+	 * @param mixed[] $options
+	 */
+    public function __construct(array $options=[])
     {
         $options += ['messageType' => 'Value is not valid number.',
             'messageMin' => 'Value is too small. Min value is ${min}.',
             'messageMax' => 'Value is too big. Max value is ${max}.', 'min' => null, 'max' => null,];
-        foreach ($options as $kOption => $option) {
-            $methodName = 'set' . ucfirst($kOption);
-            if (!method_exists($this, $methodName)) {
-                throw new OptionNotFoundException($kOption);
-            }
-
-            call_user_func([$this, $methodName], $option);
-        }
+		parent::__construct($options);
     }
 
-    /**
-     * @param string $message
-     */
-    public function setMessageType($message)
-    {
-        $this->messageType = $message;
-    }
+	/**
+	 * @return string
+	 */
+	public function getMessageType()
+	{
+		return $this->messageType;
+	}
 
-    /**
-     * @param string $message
-     */
-    public function setMessageMin($message)
-    {
-        $this->messageMin = $message;
-    }
+	/**
+	 * @param string $messageType
+	 * @return NumberValidator
+	 */
+	public function setMessageType($messageType)
+	{
+		$this->messageType = $messageType;
+		return $this;
+	}
 
-    /**
-     * @param int $min
-     */
-    public function setMin($min)
-    {
-        $this->min = $min;
-    }
+	/**
+	 * @return string
+	 */
+	public function getMessageMin()
+	{
+		return $this->messageMin;
+	}
 
-    /**
-     * @param int $max
-     */
-    public function setMax($max)
-    {
-        $this->max = $max;
-    }
+	/**
+	 * @param string $messageMin
+	 * @return NumberValidator
+	 */
+	public function setMessageMin($messageMin)
+	{
+		$this->messageMin = $messageMin;
+		return $this;
+	}
 
-    /**
-     * @param string $message
-     */
-    public function setMessageMax($message)
-    {
-        $this->messageMax = $message;
-    }
+	/**
+	 * @return string
+	 */
+	public function getMessageMax()
+	{
+		return $this->messageMax;
+	}
+
+	/**
+	 * @param string $messageMax
+	 * @return NumberValidator
+	 */
+	public function setMessageMax($messageMax)
+	{
+		$this->messageMax = $messageMax;
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMin()
+	{
+		return $this->min;
+	}
+
+	/**
+	 * @param int $min
+	 * @return NumberValidator
+	 */
+	public function setMin($min)
+	{
+		$this->min = $min;
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMax()
+	{
+		return $this->max;
+	}
+
+	/**
+	 * @param int $max
+	 * @return NumberValidator
+	 */
+	public function setMax($max)
+	{
+		$this->max = $max;
+		return $this;
+	}
 
     /**
      * {@inheritdoc}

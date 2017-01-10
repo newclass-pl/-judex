@@ -65,7 +65,7 @@ class EmailValidatorTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testCustomMessage(){
-        $validator=new EmailValidator('Custom message.');
+        $validator=new EmailValidator(['message'=>'Custom message.']);
         $result=new Result();
 
         $validator->validate(null,$result);

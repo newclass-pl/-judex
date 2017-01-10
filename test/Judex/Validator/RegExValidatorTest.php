@@ -30,7 +30,7 @@ class RegExValidatorTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testValidateSuccess(){
-        $validator=new RegExValidator('message: \d{1}');
+        $validator=new RegExValidator(['pattern'=>'message: \d{1}']);
         $resultMock=$this->getMockBuilder(Result::class)->getMock();
         $resultMock->expects($this->never())->method('addError');
 
@@ -44,7 +44,7 @@ class RegExValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateFail(){
         $errorMessage=['Value is not validated by pattern.'];
-        $validator=new RegExValidator('message: \d{1}');
+        $validator=new RegExValidator(['pattern'=>'message: \d{1}']);
 
         $result=new Result();
         $validator->validate('unknown',$result);
@@ -67,7 +67,7 @@ class RegExValidatorTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testCustomMessage(){
-        $validator=new RegExValidator('message: \d{1}','Custom message.');
+        $validator=new RegExValidator(['pattern'=>'message: \d{1}','message'=>'Custom message.']);
         $result=new Result();
 
         $validator->validate('unknown',$result);

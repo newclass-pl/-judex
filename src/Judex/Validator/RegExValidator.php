@@ -25,29 +25,69 @@ use Judex\AbstractValidator;
 class RegExValidator extends AbstractValidator
 {
 
-    /**
-     * @var string
-     */
-    private $message;
-    /**
-     * @var string
-     */
-    private $pattern;
+	/**
+	 * @var string
+	 */
+	private $message;
+	/**
+	 * @var string
+	 */
+	private $pattern;
 
-    public function __construct($pattern, $message = 'Value is not validated by pattern.')
-    {
-        $this->message = $message;
-        $this->pattern = $pattern;
-    }
+	/**
+	 * RegExValidator constructor.
+	 * @param mixed[] $options
+	 */
+	public function __construct(array $options = [])
+	{
+		$options += ['message' => 'Value is not validated by pattern.'];
+		parent::__construct($options);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Result $result)
-    {
-        if (!preg_match('/' . $this->pattern . '/', $value)) {
-            $result->addError($this->message,['value'=>$value,'pattern'=>$this->pattern]);
-        }
-    }
+	/**
+	 * @return string
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
+
+	/**
+	 * @param string $message
+	 * @return RegExValidator
+	 */
+	public function setMessage($message)
+	{
+		$this->message = $message;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPattern()
+	{
+		return $this->pattern;
+	}
+
+	/**
+	 * @param string $pattern
+	 * @return RegExValidator
+	 */
+	public function setPattern($pattern)
+	{
+		$this->pattern = $pattern;
+		return $this;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function validate($value, Result $result)
+	{
+		if (!preg_match('/' . $this->pattern . '/', $value)) {
+			$result->addError($this->message, ['value' => $value, 'pattern' => $this->pattern]);
+		}
+	}
 
 }
